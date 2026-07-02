@@ -28,6 +28,7 @@ export default function App() {
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
   const canvasRef = useRef(null);
+  const stripRef = useRef(null);
   const connRef = useRef(null);
 const peerRef = useRef(null);
 const runningRef = useRef(false);
@@ -354,17 +355,18 @@ color:"#8B5CF6"
       <canvas ref={canvasRef} style={{ display: 'none' }} />
 
       <div
-        style={{
-          display: "flex",
-          gap: "25px",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: "30px",
-          marginBottom: "35px"
-        }}
-      >
-        {photos.map((p, index) => (
+  ref={stripRef}
+  style={{
+    display: "flex",
+    gap: "25px",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "30px",
+    marginBottom: "35px"
+  }}
+>
+  {photos.map((p, index) => (
           <div
             key={index}
             style={{
