@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Peer } from 'peerjs';
+import html2canvas from "html2canvas";
 
 export default function App() {
   const [peerId, setPeerId] = useState('');
@@ -203,6 +204,20 @@ setTimeout(() => {
     setTimer(null);
   };
 
+const downloadStrip = async () => {
+  if (!stripRef.current) return;
+
+  const canvas = await html2canvas(stripRef.current, {
+    scale: 3,
+    backgroundColor: "#111",
+    useCORS: true,
+  });
+
+  const link = document.createElement("a");
+  link.download = `Chelsis-Photobooth-${Date.now()}.png`;
+  link.href = canvas.toDataURL("image/png");
+  link.click();
+};
   const triggerTimer = async () => {
 
     if (runningRef.current) return;
@@ -309,6 +324,23 @@ color:"#8B5CF6"
         >
           Click a Pic!
         </button>
+        <button
+  onClick={downloadStrip}
+  style={{
+    padding: "16px 35px",
+    marginLeft: "15px",
+    border: "none",
+    borderRadius: "14px",
+    background: "#10B981",
+    color: "white",
+    fontSize: "18px",
+    fontWeight: "700",
+    cursor: "pointer",
+    boxShadow: "0 10px 25px rgba(16,185,129,.45)"
+  }}
+>
+  ⬇ Download Strip
+</button>
       </div>
 
       <div
