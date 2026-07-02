@@ -7,12 +7,18 @@ export default function App() {
   const [peerInstance, setPeerInstance] = useState(null);
   const [conn, setConn] = useState(null);
   const countdownRunning = useRef(false);
-  const [timer, setTimer] = useState(null);
-  const [photos, setPhotos] = useState([]);
+  const [timer, setTimer] = useState("");
+  const [photos, setPhotos] = useState([
+    { me: null, partner: null },
+    { me: null, partner: null },
+    { me: null, partner: null },
+    { me: null, partner: null },
+  ]);
 
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
   const canvasRef = useRef(null);
+  const countdownRunning = useRef(false);
 
   useEffect(() => {
     const peer = new Peer();
@@ -112,15 +118,17 @@ const setupConnectionHandlers = (dataConn) => {
   const capturePhoto = () => {
     const canvas = canvasRef.current;
     const video = localVideoRef.current;
-
+  
+    if (!canvas || !video) return null;
+  
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
-
-    canvas.getContext('2d').drawImage(video, 0, 0);
-
-    return canvas.toDataURL('image/png');
+  
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0);
+  
+    return canvas.toDataURL("image/png");
   };
-
   const startCountdown = async () => {
     setPhotos([]);
 
@@ -169,10 +177,9 @@ const setupConnectionHandlers = (dataConn) => {
   };
 
   const triggerTimer = () => {
-    console.log("Starting timer locally");
+    if (countdownRunning.current) return;
   
     if (conn) {
-      console.log("Sending START_TIMER");
       conn.send({
         type: "START_TIMER",
       });
