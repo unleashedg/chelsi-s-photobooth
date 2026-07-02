@@ -204,8 +204,6 @@ setTimeout(() => {
     setTimer(null);
   };
 
-
-};
 const downloadStrip = async () => {
   if (!photos.length) return;
 
@@ -377,37 +375,21 @@ color:"#8B5CF6"
         </button>
 
         <button
-          onClick={triggerTimer}
-          style={{
-            padding: "16px 35px",
-            border: "none",
-            borderRadius: "14px",
-            background: "#EC4899",
-            color: "white",
-            fontSize: "18px",
-            fontWeight: "700",
-            cursor: "pointer",
-            boxShadow: "0 10px 25px rgba(236,72,153,.45)"
-          }}
-        >
-          Click a Pic!
-          <button
-  onClick={downloadStrip}
+  onClick={triggerTimer}
   style={{
     padding: "16px 35px",
-    marginLeft: "15px",
     border: "none",
     borderRadius: "14px",
-    background: "#10B981",
+    background: "#EC4899",
     color: "white",
     fontSize: "18px",
     fontWeight: "700",
-    cursor: "pointer"
+    cursor: "pointer",
+    boxShadow: "0 10px 25px rgba(236,72,153,.45)"
   }}
 >
-  ⬇ Download Strip
+  Click a Pic!
 </button>
-        </button>
         <button
   onClick={downloadStrip}
   style={{
