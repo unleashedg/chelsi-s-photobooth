@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { Peer } from 'peerjs';
-import html2canvas from "html2canvas";
 
 export default function App() {
   const [peerId, setPeerId] = useState('');
@@ -29,6 +28,7 @@ export default function App() {
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
   const canvasRef = useRef(null);
+  const downloadCanvasRef = useRef(null);
   const stripRef = useRef(null);
   const connRef = useRef(null);
 const peerRef = useRef(null);
@@ -204,18 +204,86 @@ setTimeout(() => {
     setTimer(null);
   };
 
-const downloadStrip = async () => {
-  if (!stripRef.current) return;
 
-  const canvas = await html2canvas(stripRef.current, {
-    scale: 3,
-    backgroundColor: "#111",
-    useCORS: true,
-  });
+};
+const downloadStrip = async () => {
+  if (!photos.length) return;
+
+  const canvas = downloadCanvasRef.current;
+  const ctx = canvas.getContext("2d");
+
+  const photoWidth = 500;
+  const photoHeight = 375;
+  const gap = 20;
+  const padding = 40;
+
+  canvas.width = photoWidth * 2 + gap + padding * 2;
+  canvas.height =
+    padding * 2 +
+    120 +
+    photos.length * (photoHeight + gap);
+
+  ctx.fillStyle = "#111";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = "white";
+  ctx.font = "bold 40px Arial";
+  ctx.textAlign = "center";
+
+  ctx.fillText(
+    "Chelsi's Photobooth",
+    canvas.width / 2,
+    55
+  );
+
+  const timestamp = new Date().toLocaleString();
+
+  ctx.font = "20px Arial";
+
+  ctx.fillText(
+    timestamp,
+    canvas.width / 2,
+    90
+  );
+
+  const loadImage = (src) =>
+    new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.src = src;
+    });
+
+  let y = 120;
+
+  for (const pair of photos) {
+    const me = await loadImage(pair.me);
+    const partner = await loadImage(pair.partner);
+
+    ctx.drawImage(
+      me,
+      padding,
+      y,
+      photoWidth,
+      photoHeight
+    );
+
+    ctx.drawImage(
+      partner,
+      padding + photoWidth + gap,
+      y,
+      photoWidth,
+      photoHeight
+    );
+
+    y += photoHeight + gap;
+  }
 
   const link = document.createElement("a");
-  link.download = `Chelsis-Photobooth-${Date.now()}.png`;
+
+  link.download = "Chelsis-Photobooth.png";
+
   link.href = canvas.toDataURL("image/png");
+
   link.click();
 };
   const triggerTimer = async () => {
@@ -323,6 +391,22 @@ color:"#8B5CF6"
           }}
         >
           Click a Pic!
+          <button
+  onClick={downloadStrip}
+  style={{
+    padding: "16px 35px",
+    marginLeft: "15px",
+    border: "none",
+    borderRadius: "14px",
+    background: "#10B981",
+    color: "white",
+    fontSize: "18px",
+    fontWeight: "700",
+    cursor: "pointer"
+  }}
+>
+  ⬇ Download Strip
+</button>
         </button>
         <button
   onClick={downloadStrip}
@@ -385,6 +469,10 @@ color:"#8B5CF6"
       </div>
 
       <canvas ref={canvasRef} style={{ display: 'none' }} />
+      <canvas
+  ref={downloadCanvasRef}
+  style={{ display: "none" }}
+/>
 
       <div
   ref={stripRef}
