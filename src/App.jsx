@@ -6,6 +6,7 @@ export default function App() {
   const [remotePeerId, setRemotePeerId] = useState('');
   const [peerInstance, setPeerInstance] = useState(null);
   const [conn, setConn] = useState(null);
+  const countdownRunning = useRef(false);
   const [timer, setTimer] = useState(null);
   const [photos, setPhotos] = useState([]);
 
@@ -40,34 +41,8 @@ export default function App() {
         });
     });
 
-    peer.on('connection', (dataConn) => {
-      setConn(dataConn);
-
-      dataConn.on('data', (data) => {
-        if (data.type === 'start') {
-          startCountdown();
-        }
-
-        if (data.type === 'snap') {
-          setPhotos((prev) => {
-            const next = [...prev];
-
-            if (!next[data.index]) {
-              next[data.index] = {
-                me: null,
-                partner: null,
-              };
-            }
-
-            next[data.index] = {
-              ...next[data.index],
-              partner: data.data,
-            };
-
-            return next;
-          });
-        }
-      });
+    peer.on("connection", (dataConn) => {
+      setupConnectionHandlers(dataConn);
     });
 
     return () => {
@@ -75,10 +50,51 @@ export default function App() {
     };
   }, []);
 
+const setupConnectionHandlers = (dataConn) => {
+  setConn(dataConn);
+
+  dataConn.on("open", () => {
+    console.log("Data channel connected");
+  });
+
+  dataConn.on("data", (message) => {
+    console.log("Received:", message);
+
+    switch (message.type) {
+      case "START_TIMER":
+        startCountdown();
+        break;
+
+      case "NEW_PHOTO":
+        setPhotos((prev) => {
+          const next = [...prev];
+
+          if (!next[message.index]) {
+            next[message.index] = {
+              me: null,
+              partner: null,
+            };
+          }
+
+          next[message.index] = {
+            ...next[message.index],
+            partner: message.photo,
+          };
+
+          return next;
+        });
+
+        break;
+
+      default:
+        console.log("Unknown message", message);
+    }
+  });
+};
   const callPartner = () => {
     const dataConn = peerInstance.connect(remotePeerId);
 
-    setConn(dataConn);
+    setupConnectionHandlers(dataConn);
 
     const call = peerInstance.call(
       remotePeerId,
