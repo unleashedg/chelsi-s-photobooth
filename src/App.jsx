@@ -201,29 +201,77 @@ const callPartner = () => {
 
   return (
     <div
-      style={{
-        textAlign: 'center',
-        padding: '20px',
-        fontFamily: 'sans-serif',
-      }}
+    style={{
+      minHeight: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      padding: "40px",
+      background: "transparent"
+    }}
     >
-      <h1>{timer ? timer : 'Photobooth'}</h1>
+      <h1
+style={{
+  fontSize: "70px",
+  fontWeight: "700",
+  marginBottom: "20px",
+  color: "#F472B6",
+  textShadow: "0 0 30px rgba(244,114,182,.45)"
+}}
+>
+{timer ? timer : "📸 Chelsi's-Photobooth"}
+</h1>
 
-      <p>
-        Your ID: <strong>{peerId}</strong>
-      </p>
+<p
+style={{
+opacity:.75,
+marginBottom:"25px",
+fontSize:"17px"
+}}
+>
+Your ID
+
+<br/>
+
+<b
+style={{
+fontSize:"22px",
+color:"#8B5CF6"
+}}
+>
+{peerId}
+</b>
+</p>
 
       <div style={{ marginBottom: '20px' }}>
         <input
           placeholder="Partner ID"
           onChange={(e) => setRemotePeerId(e.target.value)}
+          style={{
+            width:"320px",
+            padding:"16px",
+            borderRadius:"14px",
+            border:"none",
+            outline:"none",
+            fontSize:"16px",
+            background:"#1E293B",
+            color:"white",
+            marginRight:"10px"
+            }}
         />
 
         <button
           onClick={callPartner}
           style={{
-            padding: '10px 20px',
-            margin: '5px',
+            padding: "16px 30px",
+            border: "none",
+            borderRadius: "14px",
+            background: "#8B5CF6",
+            color: "white",
+            fontWeight: "600",
+            fontSize: "16px",
+            cursor: "pointer",
+            boxShadow: "0 8px 20px rgba(139,92,246,.4)"
           }}
         >
           Call
@@ -232,9 +280,15 @@ const callPartner = () => {
         <button
           onClick={triggerTimer}
           style={{
-            padding: '10px 20px',
-            margin: '5px',
-            fontWeight: 'bold',
+            padding: "16px 35px",
+            border: "none",
+            borderRadius: "14px",
+            background: "#EC4899",
+            color: "white",
+            fontSize: "18px",
+            fontWeight: "700",
+            cursor: "pointer",
+            boxShadow: "0 10px 25px rgba(236,72,153,.45)"
           }}
         >
           Click a Pic!
@@ -256,11 +310,13 @@ const callPartner = () => {
           playsInline
           muted
           style={{
-            width: '100%',
-            maxWidth: '400px',
-            background: '#333',
-            borderRadius: '10px',
-            objectFit: 'cover',
+            width: "100%",
+            maxWidth: "450px",
+            background: "#111827",
+            borderRadius: "22px",
+            border: "3px solid rgba(255,255,255,.08)",
+            boxShadow: "0 20px 40px rgba(0,0,0,.35)",
+            objectFit: "cover"
           }}
         />
 
@@ -269,11 +325,13 @@ const callPartner = () => {
           autoPlay
           playsInline
           style={{
-            width: '100%',
-            maxWidth: '400px',
-            background: '#333',
-            borderRadius: '10px',
-            objectFit: 'cover',
+            width: "100%",
+            maxWidth: "450px",
+            background: "#111827",
+            borderRadius: "22px",
+            border: "3px solid rgba(255,255,255,.08)",
+            boxShadow: "0 20px 40px rgba(0,0,0,.35)",
+            objectFit: "cover"
           }}
         />
       </div>
@@ -282,21 +340,29 @@ const callPartner = () => {
 
       <div
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          marginTop: '20px',
+          display: "flex",
+          gap: "25px",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "30px",
+          marginBottom: "35px"
         }}
       >
         {photos.map((p, index) => (
           <div
             key={index}
             style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '10px',
-              justifyContent: 'center',
-              marginBottom: '10px',
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "15px",
+              justifyContent: "center",
+              alignItems: "center",
+              background: "#111827",
+              padding: "20px",
+              borderRadius: "22px",
+              marginBottom: "25px",
+              boxShadow: "0 15px 35px rgba(0,0,0,.35)"
             }}
           >
             {p.me && (
