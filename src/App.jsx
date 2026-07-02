@@ -18,7 +18,6 @@ export default function App() {
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
   const canvasRef = useRef(null);
-  const countdownRunning = useRef(false);
   const connRef = useRef(null);
 const peerRef = useRef(null);
 const runningRef = useRef(false);
