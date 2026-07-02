@@ -62,8 +62,11 @@ const setupConnectionHandlers = (dataConn) => {
 
     switch (message.type) {
       case "START_TIMER":
-        startCountdown();
-        break;
+  console.log("Received START_TIMER");
+
+  startCountdown();
+
+  break;
 
       case "NEW_PHOTO":
         setPhotos((prev) => {
@@ -166,12 +169,15 @@ const setupConnectionHandlers = (dataConn) => {
   };
 
   const triggerTimer = () => {
+    console.log("Starting timer locally");
+  
     if (conn) {
+      console.log("Sending START_TIMER");
       conn.send({
-        type: 'start',
+        type: "START_TIMER",
       });
     }
-
+  
     startCountdown();
   };
 
