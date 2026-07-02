@@ -14,6 +14,16 @@ export default function App() {
     { me: null, partner: null },
     { me: null, partner: null },
   ]);
+  const [flash, setFlash] = useState(false);
+  const [stripTime] = useState(
+    new Date().toLocaleString([],{
+    day:"2-digit",
+    month:"short",
+    year:"numeric",
+    hour:"2-digit",
+    minute:"2-digit"
+    })
+    );
 
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
@@ -124,6 +134,11 @@ const callPartner = () => {
 };
 
   const capturePhoto = () => {
+    setFlash(true);
+
+setTimeout(() => {
+  setFlash(false);
+},100);
     const canvas = canvasRef.current;
     const video = localVideoRef.current;
   
@@ -353,27 +368,36 @@ color:"#8B5CF6"
           <div
             key={index}
             style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "15px",
-              justifyContent: "center",
-              alignItems: "center",
-              background: "#111827",
-              padding: "20px",
-              borderRadius: "22px",
-              marginBottom: "25px",
-              boxShadow: "0 15px 35px rgba(0,0,0,.35)"
-            }}
+              display:"flex",
+              flexWrap:"wrap",
+              justifyContent:"center",
+              gap:"15px",
+              
+              background:"#0F172A",
+              
+              borderRadius:"24px",
+              
+              padding:"20px",
+              
+              marginBottom:"35px",
+              
+              border:"10px solid #111",
+              
+              boxShadow:"0 20px 40px rgba(0,0,0,.45)"
+              }}
           >
             {p.me && (
               <img
                 src={p.me}
                 alt={`Me ${index}`}
                 style={{
-                  width: '45%',
-                  maxWidth: '200px',
-                  border: '5px solid white',
-                }}
+                  width:"45%",
+                  maxWidth:"210px",
+                  borderRadius:"10px",
+                  border:"8px solid white",
+                  background:"white",
+                  boxShadow:"0 8px 20px rgba(0,0,0,.3)"
+                  }}
               />
             )}
 
@@ -382,15 +406,45 @@ color:"#8B5CF6"
                 src={p.partner}
                 alt={`Partner ${index}`}
                 style={{
-                  width: '45%',
-                  maxWidth: '200px',
-                  border: '5px solid white',
-                }}
+                  width:"45%",
+                  maxWidth:"210px",
+                  borderRadius:"10px",
+                  border:"8px solid white",
+                  background:"white",
+                  boxShadow:"0 8px 20px rgba(0,0,0,.3)"
+                  }}
               />
             )}
+            <p
+style={{
+width:"100%",
+textAlign:"center",
+marginTop:"15px",
+color:"#bbb",
+fontSize:"14px",
+letterSpacing:"2px"
+}}
+>
+{stripTime}
+</p>
           </div>
         ))}
       </div>
+      {flash && (
+<div
+style={{
+position:"fixed",
+top:0,
+left:0,
+width:"100%",
+height:"100%",
+background:"white",
+opacity:.9,
+zIndex:9999,
+pointerEvents:"none"
+}}
+/>
+)}
     </div>
   );
 }
