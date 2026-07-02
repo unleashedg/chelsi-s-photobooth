@@ -58,50 +58,7 @@ const runningRef = useRef(false);
     };
   }, []);
 
-const setupConnectionHandlers = (dataConn) => {
-  setConn(dataConn);
 
-  dataConn.on("open", () => {
-    console.log("Data channel connected");
-  });
-
-  dataConn.on("data", (message) => {
-    console.log("Received:", message);
-
-    switch (message.type) {
-      case "START_TIMER":
-  console.log("Received START_TIMER");
-
-  startCountdown();
-
-  break;
-
-      case "NEW_PHOTO":
-        setPhotos((prev) => {
-          const next = [...prev];
-
-          if (!next[message.index]) {
-            next[message.index] = {
-              me: null,
-              partner: null,
-            };
-          }
-
-          next[message.index] = {
-            ...next[message.index],
-            partner: message.photo,
-          };
-
-          return next;
-        });
-
-        break;
-
-      default:
-        console.log("Unknown message", message);
-    }
-  });
-};
 function setupConnectionHandlers(dataConn) {
   connRef.current = dataConn;
   setConn(dataConn);
