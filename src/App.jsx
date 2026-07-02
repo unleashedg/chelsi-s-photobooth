@@ -19,9 +19,13 @@ export default function App() {
   const remoteVideoRef = useRef(null);
   const canvasRef = useRef(null);
   const countdownRunning = useRef(false);
+  const connRef = useRef(null);
+const peerRef = useRef(null);
+const runningRef = useRef(false);
 
   useEffect(() => {
     const peer = new Peer();
+    peerRef.current = peer;
 
     setPeerInstance(peer);
 
@@ -47,10 +51,9 @@ export default function App() {
         });
     });
 
-    peer.on("connection", (dataConn) => {
+    peer.on("connection",(dataConn)=>{
       setupConnectionHandlers(dataConn);
-    });
-
+  });
     return () => {
       peer.destroy();
     };
@@ -100,20 +103,69 @@ const setupConnectionHandlers = (dataConn) => {
     }
   });
 };
-  const callPartner = () => {
-    const dataConn = peerInstance.connect(remotePeerId);
+function setupConnectionHandlers(dataConn) {
+  connRef.current = dataConn;
+  setConn(dataConn);
 
-    setupConnectionHandlers(dataConn);
+  dataConn.on("open", () => {
+    console.log("Data channel connected");
+  });
 
-    const call = peerInstance.call(
-      remotePeerId,
-      localVideoRef.current.srcObject
-    );
+  dataConn.on("data", async (msg) => {
+    switch (msg.type) {
 
-    call.on('stream', (remoteStream) => {
+      case "START_TIMER":
+
+        if (runningRef.current) return;
+
+        runningRef.current = true;
+
+        await startCountdown(false);
+
+        runningRef.current = false;
+
+        break;
+
+      case "NEW_PHOTO":
+
+        setPhotos(prev => {
+          const next = [...prev];
+
+          if (!next[msg.index]) {
+            next[msg.index] = {
+              me: null,
+              partner: null
+            };
+          }
+
+          next[msg.index].partner = msg.photo;
+
+          return [...next];
+        });
+
+        break;
+
+      default:
+        break;
+    }
+  });
+}
+const callPartner = () => {
+
+  const dataConn = peerRef.current.connect(remotePeerId);
+
+  setupConnectionHandlers(dataConn);
+
+  const call = peerRef.current.call(
+    remotePeerId,
+    localVideoRef.current.srcObject
+  );
+
+  call.on("stream",(remoteStream)=>{
       remoteVideoRef.current.srcObject = remoteStream;
-    });
-  };
+  });
+
+};
 
   const capturePhoto = () => {
     const canvas = canvasRef.current;
@@ -129,7 +181,12 @@ const setupConnectionHandlers = (dataConn) => {
   
     return canvas.toDataURL("image/png");
   };
-  const startCountdown = async () => {
+  const startCountdown = async (sendSignal = true) => {
+    if (sendSignal && connRef.current) {
+      connRef.current.send({
+          type: "START_TIMER"
+      });
+  }
     setPhotos([]);
 
     for (let j = 3; j > 0; j--) {
@@ -160,13 +217,11 @@ const setupConnectionHandlers = (dataConn) => {
         return next;
       });
 
-      if (conn) {
-        conn.send({
-          type: 'snap',
-          data: myPhoto,
-          index: i,
-        });
-      }
+      connRef.current?.send({
+        type: "NEW_PHOTO",
+        index: i,
+        photo: myPhoto,
+      });
 
       if (i < 3) {
         await new Promise((r) => setTimeout(r, 500));
@@ -176,17 +231,17 @@ const setupConnectionHandlers = (dataConn) => {
     setTimer(null);
   };
 
-  const triggerTimer = () => {
-    if (countdownRunning.current) return;
-  
-    if (conn) {
-      conn.send({
-        type: "START_TIMER",
-      });
-    }
-  
-    startCountdown();
-  };
+  const triggerTimer = async () => {
+
+    if (runningRef.current) return;
+
+    runningRef.current = true;
+
+    await startCountdown(true);
+
+    runningRef.current = false;
+
+};
 
   return (
     <div
