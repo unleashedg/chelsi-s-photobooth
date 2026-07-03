@@ -459,15 +459,41 @@ color:"#8B5CF6"
       <div
   ref={stripRef}
   style={{
+    width: "680px",
+    maxWidth: "95vw",
+    background: "#121212",
+    borderRadius: "24px",
+    padding: "35px",
     display: "flex",
-    gap: "25px",
-    flexWrap: "wrap",
-    justifyContent: "center",
+    flexDirection: "column",
     alignItems: "center",
+    gap: "25px",
     marginTop: "30px",
-    marginBottom: "35px"
+    marginBottom: "35px",
+    boxShadow: "0 20px 60px rgba(0,0,0,.5)"
   }}
 >
+<div
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    gap: "45px",
+    marginBottom: "15px"
+  }}
+>
+  {[1,2,3,4].map((i)=>(
+    <div
+      key={i}
+      style={{
+        width:"18px",
+        height:"18px",
+        borderRadius:"50%",
+        background:"#000",
+        border:"2px solid #444"
+      }}
+    />
+  ))}
+</div>
   {photos.map((p, index) => (
           <div
             key={index}
@@ -477,15 +503,11 @@ color:"#8B5CF6"
               justifyContent:"center",
               gap:"15px",
               
-              background:"#0F172A",
-              
-              borderRadius:"24px",
-              
-              padding:"20px",
-              
-              marginBottom:"35px",
-              
-              border:"10px solid #111",
+              background:"transparent",
+              border:"none",
+              padding:"0",
+              marginBottom:"18px",
+              borderRadius:"0",
               
               boxShadow:"0 20px 40px rgba(0,0,0,.45)"
               }}
@@ -495,14 +517,14 @@ color:"#8B5CF6"
                 src={p.me}
                 alt={`Me ${index}`}
                 style={{
-                  width:"45%",
-                  maxWidth:"210px",
-                  borderRadius:"10px",
-                  border:"8px solid white",
+                  width:"260px",
+                  height:"195px",
+                  objectFit:"cover",
+                  border:"10px solid white",
+                  borderRadius:"12px",
                   background:"white",
-                  boxShadow:"0 8px 20px rgba(0,0,0,.3)"
-                  }}
-              />
+                  boxShadow:"0 8px 20px rgba(0,0,0,.35)"
+                }}              />
             )}
 
             {p.partner && (
@@ -510,29 +532,31 @@ color:"#8B5CF6"
                 src={p.partner}
                 alt={`Partner ${index}`}
                 style={{
-                  width:"45%",
-                  maxWidth:"210px",
-                  borderRadius:"10px",
-                  border:"8px solid white",
+                  width:"260px",
+                  height:"195px",
+                  objectFit:"cover",
+                  border:"10px solid white",
+                  borderRadius:"12px",
                   background:"white",
-                  boxShadow:"0 8px 20px rgba(0,0,0,.3)"
-                  }}
+                  boxShadow:"0 8px 20px rgba(0,0,0,.35)"
+                }}
               />
             )}
-            <p
-style={{
-width:"100%",
-textAlign:"center",
-marginTop:"15px",
-color:"#bbb",
-fontSize:"14px",
-letterSpacing:"2px"
-}}
->
-{stripTime}
-</p>
+           
           </div>
         ))}
+        <p
+  style={{
+    color: "#d1d5db",
+    marginTop: "20px",
+    fontSize: "16px",
+    letterSpacing: "2px",
+    fontWeight: "500",
+    textAlign: "center"
+  }}
+>
+  {stripTime}
+</p>
       </div>
       {flash && (
 <div
