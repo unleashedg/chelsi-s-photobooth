@@ -15,6 +15,7 @@ export default function App() {
     { me: null, partner: null },
   ]);
   const [flash, setFlash] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState("none");
   const [stripTime] = useState(
     new Date().toLocaleString([],{
     day:"2-digit",
@@ -135,6 +136,26 @@ const callPartner = () => {
 
 };
 
+const getCanvasFilter = () => {
+  switch (selectedFilter) {
+
+    case "bw":
+      return "grayscale(100%) contrast(115%)";
+
+    case "sepia":
+      return "sepia(100%)";
+
+    case "vintage":
+      return "sepia(35%) saturate(130%) contrast(95%) brightness(105%)";
+
+    case "instant":
+      return "contrast(105%) brightness(108%) saturate(85%)";
+
+    default:
+      return "none";
+  }
+};
+
   const capturePhoto = () => {
     setFlash(true);
 
@@ -150,7 +171,11 @@ setTimeout(() => {
     canvas.height = video.videoHeight;
   
     const ctx = canvas.getContext("2d");
-    ctx.drawImage(video, 0, 0);
+    ctx.filter = getCanvasFilter();
+
+ctx.drawImage(video, 0, 0);
+
+ctx.filter = "none";
   
     return canvas.toDataURL("image/png");
   };
@@ -408,6 +433,53 @@ color:"#8B5CF6"
   ⬇ Download Strip
 </button>
       </div>
+      <div
+  style={{
+    marginBottom: "25px",
+    display: "flex",
+    alignItems: "center",
+    gap: "15px"
+  }}
+>
+
+  <span
+    style={{
+      color: "white",
+      fontWeight: "600"
+    }}
+  >
+    Filter
+  </span>
+
+  <select
+
+    value={selectedFilter}
+
+    onChange={(e)=>setSelectedFilter(e.target.value)}
+
+    style={{
+      padding:"12px 18px",
+      borderRadius:"12px",
+      background:"#1E293B",
+      color:"white",
+      border:"none",
+      fontSize:"15px"
+    }}
+  >
+
+    <option value="none">📷 Original</option>
+
+    <option value="vintage">🎞 Vintage Film</option>
+
+    <option value="bw">⚫ Black & White</option>
+
+    <option value="sepia">☀️ Sepia</option>
+
+    <option value="instant">✨ Instant Film</option>
+
+  </select>
+
+</div>
 
       <div
         style={{
@@ -430,7 +502,8 @@ color:"#8B5CF6"
             borderRadius: "22px",
             border: "3px solid rgba(255,255,255,.08)",
             boxShadow: "0 20px 40px rgba(0,0,0,.35)",
-            objectFit: "cover"
+            objectFit: "cover",
+            filter: getCanvasFilter(),
           }}
         />
 
@@ -445,7 +518,8 @@ color:"#8B5CF6"
             borderRadius: "22px",
             border: "3px solid rgba(255,255,255,.08)",
             boxShadow: "0 20px 40px rgba(0,0,0,.35)",
-            objectFit: "cover"
+            objectFit: "cover",
+            filter:getCanvasFilter()
           }}
         />
       </div>
