@@ -655,13 +655,14 @@ color:"#8B5CF6"
                 src={p.me}
                 alt={`Me ${index}`}
                 style={{
-                  width:"260px",
-                  height:"195px",
-                  objectFit:"cover",
-                  border:"10px solid white",
-                  borderRadius:"12px",
-                  background:"white",
-                  boxShadow:"0 8px 20px rgba(0,0,0,.35)"
+                  width: "280px",
+                  height: "210px",
+                  objectFit: "cover",
+                
+                  borderRadius: "10px",
+                  border: "8px solid white",
+                  background: "white",
+                  boxShadow: "0 8px 20px rgba(0,0,0,.3)"
                 }}              />
             )}
 
@@ -670,13 +671,14 @@ color:"#8B5CF6"
                 src={p.partner}
                 alt={`Partner ${index}`}
                 style={{
-                  width:"260px",
-                  height:"195px",
-                  objectFit:"cover",
-                  border:"10px solid white",
-                  borderRadius:"12px",
-                  background:"white",
-                  boxShadow:"0 8px 20px rgba(0,0,0,.35)"
+                  width: "280px",
+                  height: "210px",
+                  objectFit: "cover",
+                
+                  borderRadius: "10px",
+                  border: "8px solid white",
+                  background: "white",
+                  boxShadow: "0 8px 20px rgba(0,0,0,.3)"
                 }}
               />
             )}
