@@ -176,29 +176,63 @@ const getCanvasFilter = () => {
   }
 };
 
-  const capturePhoto = () => {
-    setFlash(true);
+const capturePhoto = () => {
 
-setTimeout(() => {
-  setFlash(false);
-},100);
-    const canvas = canvasRef.current;
-    const video = localVideoRef.current;
-  
-    if (!canvas || !video) return null;
-  
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-  
-    const ctx = canvas.getContext("2d");
-    ctx.filter = getCanvasFilter();
+  setFlash(true);
 
-ctx.drawImage(video, 0, 0);
+  setTimeout(() => {
+    setFlash(false);
+  }, 100);
 
-ctx.filter = "none";
-  
-    return canvas.toDataURL("image/png");
-  };
+  const canvas = canvasRef.current;
+  const video = localVideoRef.current;
+
+  if (!canvas || !video) return null;
+
+  const desiredRatio = 4 / 3;
+
+  const videoWidth = video.videoWidth;
+  const videoHeight = video.videoHeight;
+
+  let cropWidth = videoWidth;
+  let cropHeight = videoHeight;
+
+  if (videoWidth / videoHeight > desiredRatio) {
+
+    cropWidth = videoHeight * desiredRatio;
+
+  } else {
+
+    cropHeight = videoWidth / desiredRatio;
+
+  }
+
+  const sx = (videoWidth - cropWidth) / 2;
+  const sy = (videoHeight - cropHeight) / 2;
+
+  canvas.width = 1200;
+  canvas.height = 900;
+
+  const ctx = canvas.getContext("2d");
+
+  ctx.filter = getCanvasFilter();
+
+  ctx.drawImage(
+    video,
+    sx,
+    sy,
+    cropWidth,
+    cropHeight,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  ctx.filter = "none";
+
+  return canvas.toDataURL("image/png");
+};
   const startCountdown = async (sendSignal = true) => {
     if (sendSignal && connRef.current) {
       connRef.current.send({
