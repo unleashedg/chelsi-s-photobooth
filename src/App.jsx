@@ -139,17 +139,37 @@ const callPartner = () => {
 const getCanvasFilter = () => {
   switch (selectedFilter) {
 
-    case "bw":
-      return "grayscale(100%) contrast(115%)";
+    case "kodak":
+      return `
+        sepia(.18)
+        saturate(1.35)
+        contrast(.95)
+        brightness(1.06)
+        hue-rotate(-6deg)
+      `;
 
-    case "sepia":
-      return "sepia(100%)";
+    case "ilford":
+      return `
+        grayscale(100%)
+        contrast(1.28)
+        brightness(.98)
+      `;
 
-    case "vintage":
-      return "sepia(35%) saturate(130%) contrast(95%) brightness(105%)";
+    case "fuji":
+      return `
+        saturate(1.45)
+        contrast(1.08)
+        brightness(1.04)
+        hue-rotate(8deg)
+      `;
 
-    case "instant":
-      return "contrast(105%) brightness(108%) saturate(85%)";
+    case "polaroid":
+      return `
+        saturate(.88)
+        contrast(.92)
+        brightness(1.12)
+        sepia(.08)
+      `;
 
     default:
       return "none";
@@ -448,7 +468,7 @@ color:"#8B5CF6"
       fontWeight: "600"
     }}
   >
-    Filter
+    Film Stock
   </span>
 
   <select
@@ -458,24 +478,34 @@ color:"#8B5CF6"
     onChange={(e)=>setSelectedFilter(e.target.value)}
 
     style={{
-      padding:"12px 18px",
-      borderRadius:"12px",
-      background:"#1E293B",
-      color:"white",
-      border:"none",
-      fontSize:"15px"
+      padding: "14px 22px",
+      borderRadius: "14px",
+      background: "#0F172A",
+      color: "white",
+      border: "2px solid rgba(255,255,255,.08)",
+      fontSize: "15px",
+      fontWeight: "600",
+      cursor: "pointer"
     }}
   >
 
-    <option value="none">📷 Original</option>
+<option value="none">📷 Original</option>
 
-    <option value="vintage">🎞 Vintage Film</option>
+<option value="kodak">
+🎞 Kodak Gold 200
+</option>
 
-    <option value="bw">⚫ Black & White</option>
+<option value="fuji">
+🌿 Fujifilm Superia
+</option>
 
-    <option value="sepia">☀️ Sepia</option>
+<option value="polaroid">
+📸 Polaroid 600
+</option>
 
-    <option value="instant">✨ Instant Film</option>
+<option value="ilford">
+⚫ Ilford HP5
+</option>
 
   </select>
 
