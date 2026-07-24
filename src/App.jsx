@@ -424,6 +424,7 @@ letterSpacing:"0.5px"
 
       <div style={{ marginBottom: '20px' }}>
         <input
+        className="partner-id-input"
           placeholder="Partner ID"
           onChange={(e) => setRemotePeerId(e.target.value)}
           style={{
