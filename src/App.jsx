@@ -215,20 +215,27 @@ const capturePhoto = () => {
 
   const ctx = canvas.getContext("2d");
 
+  ctx.save();
+
   ctx.filter = getCanvasFilter();
-
+  
+  ctx.translate(canvas.width, 0);
+  ctx.scale(-1, 1);
+  
   ctx.drawImage(
-    video,
-    sx,
-    sy,
-    cropWidth,
-    cropHeight,
-    0,
-    0,
-    canvas.width,
-    canvas.height
+      video,
+      sx,
+      sy,
+      cropWidth,
+      cropHeight,
+      0,
+      0,
+      canvas.width,
+      canvas.height
   );
-
+  
+  ctx.restore();
+  
   ctx.filter = "none";
 
   return canvas.toDataURL("image/png");
