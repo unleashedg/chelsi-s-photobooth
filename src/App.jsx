@@ -575,6 +575,7 @@ letterSpacing:"0.5px"
             boxShadow: "0 8px 18px rgba(0,0,0,.18)",
             objectFit: "cover",
             filter: getCanvasFilter(),
+            transform: "scaleX(-1)",
           }}
         />
 
@@ -590,6 +591,7 @@ letterSpacing:"0.5px"
             border: "3px solid rgba(255,255,255,.08)",
             boxShadow: "0 20px 40px rgba(0,0,0,.35)",
             objectFit: "cover",
+            transform: "scaleX(-1)",
             filter:getCanvasFilter()
           }}
         />
