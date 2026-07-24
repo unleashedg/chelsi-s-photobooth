@@ -412,7 +412,10 @@ Your ID
 <b
 style={{
 fontSize:"22px",
-color:"#8B5CF6"
+color:"#FFFFFF",
+fontFamily:"SF Mono, Menlo, Monaco, Consolas, monospace",
+fontWeight:"500",
+letterSpacing:"0.5px"
 }}
 >
 {peerId}
@@ -430,10 +433,12 @@ color:"#8B5CF6"
             border:"none",
             outline:"none",
             fontSize:"16px",
+            fontFamily:"SF Mono, Menlo, Monaco, Consolas, monospace",
+            fontWeight:"500",
             background:"#1E293B",
-            color:"white",
+            color:"#FFFFFF",
             marginRight:"10px"
-            }}
+          }}
         />
 
         <button
