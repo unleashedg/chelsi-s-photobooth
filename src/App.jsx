@@ -392,7 +392,7 @@ style={{
   fontWeight: "700",
   marginBottom: "20px",
   color: "#F472B6",
-  textShadow: "0 0 30px rgba(244,114,182,.45)"
+  textShadow: "none"
 }}
 >
 {timer ? timer : "📸 Chelsi's-Photobooth"}
@@ -447,7 +447,7 @@ color:"#8B5CF6"
             fontWeight: "600",
             fontSize: "16px",
             cursor: "pointer",
-            boxShadow: "0 8px 20px rgba(139,92,246,.4)"
+            boxShadow: "none"
           }}
         >
           Call
@@ -464,7 +464,7 @@ color:"#8B5CF6"
     fontSize: "18px",
     fontWeight: "700",
     cursor: "pointer",
-    boxShadow: "0 10px 25px rgba(236,72,153,.45)"
+    boxShadow: "none"
   }}
 >
   Click a Pic!
@@ -481,7 +481,7 @@ color:"#8B5CF6"
     fontSize: "18px",
     fontWeight: "700",
     cursor: "pointer",
-    boxShadow: "0 10px 25px rgba(16,185,129,.45)"
+    boxShadow: "none"
   }}
 >
   ⬇ Download Strip
@@ -565,7 +565,7 @@ color:"#8B5CF6"
             background: "#111827",
             borderRadius: "22px",
             border: "3px solid rgba(255,255,255,.08)",
-            boxShadow: "0 20px 40px rgba(0,0,0,.35)",
+            boxShadow: "0 8px 18px rgba(0,0,0,.18)",
             objectFit: "cover",
             filter: getCanvasFilter(),
           }}
@@ -647,7 +647,7 @@ color:"#8B5CF6"
               marginBottom:"18px",
               borderRadius:"0",
               
-              boxShadow:"0 20px 40px rgba(0,0,0,.45)"
+              boxShadow: "0 8px 20px rgba(0,0,0,.2)"
               }}
           >
             {p.me && (
@@ -662,7 +662,7 @@ color:"#8B5CF6"
                   borderRadius: "10px",
                   border: "8px solid white",
                   background: "white",
-                  boxShadow: "0 8px 20px rgba(0,0,0,.3)"
+                  boxShadow: "0 4px 10px rgba(0,0,0,.15)"
                 }}              />
             )}
 
@@ -678,7 +678,7 @@ color:"#8B5CF6"
                   borderRadius: "10px",
                   border: "8px solid white",
                   background: "white",
-                  boxShadow: "0 8px 20px rgba(0,0,0,.3)"
+                  boxShadow: "0 4px 10px rgba(0,0,0,.15)"
                 }}
               />
             )}
