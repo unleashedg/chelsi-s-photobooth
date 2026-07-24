@@ -426,7 +426,7 @@ color:"#8B5CF6"
           style={{
             width:"320px",
             padding:"16px",
-            borderRadius:"14px",
+            borderRadius:"8px",
             border:"none",
             outline:"none",
             fontSize:"16px",
@@ -441,13 +441,14 @@ color:"#8B5CF6"
           style={{
             padding: "16px 30px",
             border: "none",
-            borderRadius: "14px",
+            borderRadius: "8px",
             background: "#8B5CF6",
             color: "white",
             fontWeight: "600",
             fontSize: "16px",
             cursor: "pointer",
-            boxShadow: "none"
+            boxShadow: "none",
+            marginRight: "16px"
           }}
         >
           Call
@@ -458,7 +459,7 @@ color:"#8B5CF6"
   style={{
     padding: "16px 35px",
     border: "none",
-    borderRadius: "14px",
+    borderRadius: "8px",
     background: "#EC4899",
     color: "white",
     fontSize: "18px",
@@ -475,7 +476,7 @@ color:"#8B5CF6"
     padding: "16px 35px",
     marginLeft: "15px",
     border: "none",
-    borderRadius: "14px",
+    borderRadius: "8px",
     background: "#10B981",
     color: "white",
     fontSize: "18px",
